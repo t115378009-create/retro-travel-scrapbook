@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>京都旅行手帳回憶錄 - 2025.06.29</title>
+    <!-- Cute Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --paper-bg: #f7f3ed;
+            --paper-texture: radial-gradient(#e8dfd0 15%, transparent 16%), radial-gradient(#dfd4c0 15%, transparent 16%);
+            --tape-color: rgba(245, 222, 179, 0.75);
+            --tape-border: rgba(210, 180, 130, 0.5);
+            --ink-color: #2c241d;
+            --accent-red: #c84b31;
+            --accent-gold: #d4a373;
+            --card-bg: #fffefb;
+            --font-cute: 'Zen Maru Gothic', 'ZCOOL KuaiLe', "Microsoft JhengHei", sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--paper-bg);
+            background-image: var(--paper-texture);
+            background-size: 24px 24px;
+            color: var(--ink-color);
+            font-family: var(--font-cute);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Smooth Pure White Die-cut Sticker Style using SVG Filter */
+        .illustration-sticker {
+            position: absolute;
+            width: 85px;
+            height: 85px;
+            pointer-events: none;
+            z-index: 5;
+            filter: url(#smooth-diecut);
+            transition: transform 0.3s;
+        }
+
+        .nav-bar {
+            max-width: 1200px;
+            margin: 0 auto 30px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 25px;
+            background: rgba(255, 253, 249, 0.9);
+            border: 2px dashed #b5a48b;
+            border-radius: 12px;
+            box-shadow: 3px 5px 15px rgba(0,0,0,0.06);
+            position: relative;
+            z-index: 10;
+        }
+
+        .back-link { text-decoration: none; color: var(--accent-red); font-weight: bold; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+        .page-title { font-size: 1.8rem; letter-spacing: 2px; color: var(--ink-color); text-shadow: 1px 1px 0px rgba(255,255,255,0.9); display: flex; align-items: center; gap: 12px; }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            padding: 20px 40px 80px 40px;
+        }
+
+        /* Map Section */
+        .map-section { text-align: center; margin-bottom: 60px; position: relative; }
+        .map-wrapper {
+            display: inline-block;
+            background: #fffefb;
+            padding: 20px 30px;
+            border: 3px solid #b5a48b;
+            border-radius: 16px;
+            box-shadow: 5px 8px 25px rgba(0,0,0,0.1);
+            position: relative;
+            transform: rotate(-0.5deg);
+        }
+
+        .map-svg { background: #faf7f0; border-radius: 8px; box-shadow: inset 0 0 10px rgba(0,0,0,0.03); }
+
+        /* Scrapbook Layout */
+        .scrapbook-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px 100px;
+            position: relative;
+        }
+
+        @media (max-width: 1000px) {
+            .scrapbook-layout { grid-template-columns: 1fr; gap: 50px; }
+            .container { padding: 20px; }
+            .illustration-sticker { display: none; }
+        }
+
+        /* Leader Lines */
+        .leader-lines { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .leader-line { fill: none; stroke: #8c7355; stroke-width: 2.5; stroke-dasharray: 6 4; opacity: 0.5; transition: 0.3s; }
+        .scrapbook-card.active .leader-line { stroke: var(--accent-red); opacity: 1; stroke-width: 3.5; }
+
+        /* Scrapbook Card */
+        .scrapbook-card {
+            background: var(--card-bg);
+            padding: 25px 25px 35px 25px;
+            border-radius: 8px;
+            box-shadow: 4px 6px 20px rgba(0,0,0,0.08);
+            position: relative;
+            z-index: 2;
+            border: 1px solid #dfd3be;
+            transition: 0.3s ease;
+        }
+        .scrapbook-card:nth-child(odd) { transform: rotate(1deg); }
+        .scrapbook-card:nth-child(even) { transform: rotate(-1.2deg); }
+
+        .polaroid {
+            background: #fff;
+            padding: 12px 12px 45px 12px;
+            box-shadow: 2px 3px 12px rgba(0,0,0,0.06);
+            margin-bottom: 20px;
+            position: relative;
+            border: 1px solid #e0dbd0;
+            width: 100%;
+            display: block;
+        }
+        .polaroid img { width: 100%; height: auto; display: block; border: 1px solid #f0f0f0; }
+        .film-stamp { position: absolute; bottom: 12px; left: 15px; font-family: monospace; font-size: 0.9rem; color: #b85c37; font-weight: bold; }
+
+        .card-header { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 2px dotted #dcd1be; padding-bottom: 8px; }
+        .location-name { font-size: 1.4rem; font-weight: bold; color: var(--accent-red); }
+        .time-capsule { font-size: 0.9rem; background: #f0e6d2; padding: 3px 8px; border-radius: 4px; border: 1px solid #d4c5ab; }
+
+        .memo-box {
+            background: #fff9e6;
+            padding: 18px;
+            border-left: 5px solid var(--accent-gold);
+            position: relative;
+            box-shadow: 1px 2px 8px rgba(0,0,0,0.05);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            z-index: 2;
+        }
+        .memo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #dcd1be;
+            padding-bottom: 5px;
+        }
+        .memo-tag {
+            font-size: 0.7rem;
+            background: var(--accent-gold);
+            color: #fff;
+            padding: 1px 6px;
+            font-weight: bold;
+            border-radius: 2px;
+        }
+        .mood-stamp {
+            border: 2px solid var(--accent-red);
+            color: var(--accent-red);
+            padding: 2px 6px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transform: rotate(4deg);
+            background: rgba(184, 59, 43, 0.05);
+            border-radius: 4px;
+        }
+        .user-text { word-break: break-all; }
+
+        footer { text-align: center; margin-top: 80px; font-size: 0.9rem; color: #7a6b58; border-top: 1px dashed #dcd1be; padding-top: 30px; }
+    </style>
+</head>
+<body>
+
+    <!-- SVG Filters for Pure White Smooth Diecut Stickers -->
+    <svg style="position: absolute; width: 0; height: 0;" aria-hidden="true">
+        <filter id="smooth-diecut">
+            <feMorphology in="SourceAlpha" result="expanded" operator="dilate" radius="3"/>
+            <feFlood flood-color="#ffffff" result="white"/>
+            <feComposite in="white" in2="expanded" operator="in" result="white-shape"/>
+            <feMerge>
+                <feMergeNode in="white-shape"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.18"/>
+        </filter>
+    </svg>
+
+    <div class="container">
+        
+        <!-- Map Section -->
+        <div class="map-section">
+            <div class="map-wrapper">
+                <!-- Torii Sticker at top left of map (SAFE) -->
+                <div class="illustration-sticker" style="top: -35px; left: -35px; width: 85px; height: 85px; transform: rotate(-10deg);">
+                    <svg viewBox="0 0 100 100">
+                        <defs>
+                            <linearGradient id="toriiGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#ef4444"/><stop offset="100%" stop-color="#b91c1c"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M 15,35 Q 50,25 85,35 L 88,42 Q 50,32 12,42 Z" fill="url(#toriiGrad)" stroke="#5c4938" stroke-width="1"/>
+                        <path d="M 20,45 L 80,45" fill="none" stroke="#5c4938" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M 30,45 L 30,95 M 70,45 L 70,95" fill="none" stroke="url(#toriiGrad)" stroke-width="7" stroke-linecap="round"/>
+                        <path d="M 30,45 L 30,95 M 70,45 L 70,95" fill="none" stroke="#5c4938" stroke-width="1"/>
+                    </svg>
+                </div>
+
+                <div class="map-title">📍 京都旅行足跡地圖</div>
+                <svg class="map-svg" width="400" height="320" viewBox="0 0 400 320">
+                    <path d="M 80,50 Q 200,30 320,60 Q 360,160 330,260 Q 200,300 70,260 Q 30,150 80,50 Z" fill="#f0e9d8" stroke="#b5a48b" stroke-width="2.5" stroke-dasharray="4 2"/>
+                    <path d="M 190,40 Q 200,160 170,290" fill="none" stroke="#a2b9c2" stroke-width="4" opacity="0.6"/>
+                    <path d="M 110,95 L 310,240 L 175,200 L 245,225" fill="none" stroke="#c84b31" stroke-width="3" stroke-dasharray="6 4" opacity="0.85"/>
+                    <g><circle id="pin-1" cx="110" cy="95" r="9" fill="#c84b31" stroke="#fff" stroke-width="2"/><text x="125" y="99" font-size="13" font-weight="bold" fill="#2c241d">1. 金閣寺</text></g>
+                    <g><circle id="pin-2" cx="310" cy="240" r="9" fill="#c84b31" stroke="#fff" stroke-width="2"/><text x="210" y="244" font-size="13" font-weight="bold" fill="#2c241d">2. 伏見稻荷</text></g>
+                    <g><circle id="pin-3" cx="175" cy="200" r="8" fill="#d4a373" stroke="#fff" stroke-width="2"/><text x="120" y="185" font-size="13" font-weight="bold" fill="#2c241d">3. 京都塔</text></g>
+                    <g><circle id="pin-4" cx="245" cy="225" r="8" fill="#d4a373" stroke="#fff" stroke-width="2"/><text x="255" y="229" font-size="13" font-weight="bold" fill="#2c241d">4. 京都車站</text></g>
+                </svg>
+            </div>
+        </div>
+
+        <div class="nav-bar">
+            <a href="../index.html" class="back-link">← 返回明信片總覽</a>
+            <div class="page-title">⛩️ 京都漫遊手帳 2025.06.29</div>
+            <div style="width: 100px;"></div>
+        </div>
+
+        <div class="scrapbook-layout" id="scrapbookGrid">
+            <svg class="leader-lines" id="leaderSvg"></svg>
+
+            <!-- Card 1 -->
+            <div class="scrapbook-card" data-pin="pin-1">
+                <div class="card-header">
+                    <span class="location-name">金閣寺</span>
+                    <span class="time-capsule">⏱️ 11:48</span>
+                </div>
+                <div class="polaroid">
+                    <img src="../photos/Kyoto/Kyoto1.jpg" alt="金閣寺">
+                    <div class="film-stamp">'25 6.29</div>
+                    <!-- Matcha Parfait Sticker: Strictly in Polaroid Bottom-Right White Margin -->
+                    <div class="illustration-sticker" style="bottom: 8px; right: 8px; width: 70px; height: 85px; transform: rotate(6deg);">
+                        <svg viewBox="0 0 100 120">
+                            <defs>
+                                <linearGradient id="matchaGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#65a30d"/><stop offset="100%" stop-color="#3f6212"/></linearGradient>
+                            </defs>
+                            <path d="M 30,30 Q 50,110 70,30" fill="url(#matchaGrad)" stroke="#5c4938" stroke-width="1"/>
+                            <path d="M 25,25 L 75,25 Q 75,35 25,35 Z" fill="#fff" stroke="#5c4938" stroke-width="1"/>
+                            <circle cx="50" cy="15" r="11" fill="#fff" stroke="#5c4938" stroke-width="1"/>
+                            <circle cx="58" cy="12" r="3.5" fill="#dc2626"/>
+                            <rect x="48" y="35" width="4" height="60" fill="#5c4938" rx="2" opacity="0.6"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="memo-box">
+                    <div class="memo-header">
+                        <div class="memo-tag">MEMO</div>
+                        <div class="mood-stamp">[ ☀️ 晴朗 ｜ 🥵 熱到融化 ]</div>
+                    </div>
+                    <div class="user-text">超熱熱到不行而且遊客超多</div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="scrapbook-card" data-pin="pin-2">
+                <div class="card-header">
+                    <span class="location-name">伏見稻荷神社</span>
+                    <span class="time-capsule">⏱️ 14:53</span>
+                </div>
+                <div class="polaroid">
+                    <img src="../photos/Kyoto/Kyoto2.jpg" alt="伏見稻荷神社">
+                    <div class="film-stamp">'25 6.29</div>
+                    <!-- Fox Ema Sticker: Strictly in Polaroid Bottom-Right White Margin -->
+                    <div class="illustration-sticker" style="bottom: 8px; right: 8px; width: 75px; height: 75px; transform: rotate(-8deg);">
+                        <svg viewBox="0 0 100 100">
+                            <path d="M 20,40 L 50,15 L 80,40 L 80,85 L 20,85 Z" fill="#fed7aa" stroke="#78350f" stroke-width="1"/>
+                            <circle cx="35" cy="55" r="4.5" fill="#2c241d"/><circle cx="65" cy="55" r="4.5" fill="#2c241d"/>
+                            <path d="M 30,75 Q 50,83 70,75" fill="none" stroke="#dc2626" stroke-width="2"/>
+                            <path d="M 50,5 Q 50,15 50,25" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="memo-box">
+                    <div class="memo-header">
+                        <div class="memo-tag">MEMO</div>
+                        <div class="mood-stamp">[ ⛅ 悶熱 ｜ 😫 鐵腿累死 ]</div>
+                    </div>
+                    <div class="user-text">我們直接爬上山頂快累死...下山腳都軟了</div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="scrapbook-card" data-pin="pin-3">
+                <div class="card-header">
+                    <span class="location-name">京都塔</span>
+                    <span class="time-capsule">⏱️ 18:39</span>
+                </div>
+                <div class="polaroid">
+                    <img src="../photos/Kyoto/Kyoto3.jpg" alt="京都塔">
+                    <div class="film-stamp">'25 6.29</div>
+                    <!-- Wagashi Dango Sticker: Strictly in Polaroid Bottom-Right White Margin -->
+                    <div class="illustration-sticker" style="bottom: 8px; right: 8px; width: 75px; height: 75px; transform: rotate(10deg);">
+                        <svg viewBox="0 0 100 100">
+                            <line x1="50" y1="10" x2="50" y2="90" stroke="#d4a373" stroke-width="3.5" stroke-linecap="round"/>
+                            <circle cx="50" cy="25" r="13" fill="#fecaca" stroke="#5c4938" stroke-width="1"/>
+                            <circle cx="50" cy="50" r="13" fill="#fff" stroke="#5c4938" stroke-width="1"/>
+                            <circle cx="50" cy="75" r="13" fill="#d9f99d" stroke="#5c4938" stroke-width="1"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="memo-box">
+                    <div class="memo-header">
+                        <div class="memo-tag">MEMO</div>
+                        <div class="mood-stamp">[ 🌙 傍晚 ｜ 😴 腳酸鐵腿 ]</div>
+                    </div>
+                    <div class="user-text">逛街一整天真的超累腳超級痠</div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="scrapbook-card" data-pin="pin-4">
+                <div class="card-header">
+                    <span class="location-name">京都車站</span>
+                    <span class="time-capsule">⏱️ 18:40</span>
+                </div>
+                <div class="polaroid">
+                    <img src="../photos/Kyoto/Kyoto4.jpg" alt="京都車站">
+                    <div class="film-stamp">'25 6.29</div>
+                    <!-- Kyoto Tower Sticker: Strictly in Polaroid Bottom-Right White Margin -->
+                    <div class="illustration-sticker" style="bottom: 8px; right: 8px; width: 70px; height: 85px; transform: rotate(-4deg);">
+                        <svg viewBox="0 0 100 120">
+                            <rect x="47" y="40" width="6" height="70" fill="#ef4444" stroke="#5c4938" stroke-width="1"/>
+                            <ellipse cx="50" cy="40" rx="18" ry="11" fill="#fff" stroke="#5c4938" stroke-width="1"/>
+                            <path d="M 50,40 L 50,5" fill="none" stroke="#ef4444" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="memo-box">
+                    <div class="memo-header">
+                        <div class="memo-tag">MEMO</div>
+                        <div class="mood-stamp">[ ✨ 夜景 ｜ 😄 好逛開心 ]</div>
+                    </div>
+                    <div class="user-text">京都車站好大!而且很好逛哈哈</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Retro Travel Scrapbook Map &copy; 2025 Kyoto Trip.</p>
+    </footer>
+
+    <script>
+        const cards = document.querySelectorAll('.scrapbook-card');
+        function drawLines() {
+            const svg = document.getElementById('leaderSvg');
+            const container = document.querySelector('.container');
+            const layout = document.querySelector('.scrapbook-layout');
+            if(!svg || !container || !layout) return;
+            const containerRect = container.getBoundingClientRect();
+            svg.setAttribute('width', containerRect.width);
+            svg.setAttribute('height', layout.offsetHeight);
+            svg.innerHTML = '';
+            cards.forEach(card => {
+                const pinId = card.getAttribute('data-pin');
+                const pinCircle = document.getElementById(pinId);
+                if(!pinCircle) return;
+                const pinRect = pinCircle.getBoundingClientRect();
+                const cardRect = card.getBoundingClientRect();
+                const mapCenterX = pinRect.left + pinRect.width / 2 - containerRect.left;
+                const mapCenterY = pinRect.top + pinRect.height / 2 - containerRect.top;
+                const cardX = cardRect.left + cardRect.width / 2 - containerRect.left;
+                const cardY = cardRect.top + 60 - containerRect.top;
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                const cp1X = mapCenterX + (cardX - mapCenterX) * 0.5;
+                const cp1Y = mapCenterY;
+                const cp2X = mapCenterX + (cardX - mapCenterX) * 0.5;
+                const cp2Y = cardY;
+                path.setAttribute('d', `M ${mapCenterX} ${mapCenterY} C ${cp1X} ${cp1Y}, ${cp2X} ${cp2Y}, ${cardX} ${cardY}`);
+                path.setAttribute('class', 'leader-line');
+                svg.appendChild(path);
+            });
+        }
+        window.addEventListener('load', drawLines);
+        window.addEventListener('resize', drawLines);
+        window.addEventListener('scroll', drawLines);
+        setTimeout(drawLines, 300);
+    </script>
+</body>
+</html>
